@@ -8,7 +8,7 @@
 
 int main(int argc, const char *argv[]) {
     if (argc != 3) {
-        std::cerr << "Usage: infer_model <torchscript-model-path> <input-data-path>" << std::endl;
+        std::cerr << "Usage: <root-path> <torchscript-model-path> <input-data-path>" << std::endl;
         return -1;
     }
 
