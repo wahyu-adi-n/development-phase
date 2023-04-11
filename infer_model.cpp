@@ -1,4 +1,3 @@
-
 #include <cassert>
 #include <iostream>
 #include <fstream>
@@ -13,10 +12,7 @@ int main(int argc, const char *argv[]) {
         return -1;
     }
 
-    // make sure CUDA is available; get CUDA device
-    bool haveCuda = torch::cuda::is_available();
-    assert(haveCuda);
-    torch::Device device = torch::kCUDA;
+    torch::Device device = torch::kCPU;
 
     std::cout << "Loading model..." << std::endl;
 
@@ -33,13 +29,13 @@ int main(int argc, const char *argv[]) {
     std::cout << "Model loaded successfully" << std::endl;
     std::cout << std::endl;
 
-    // switch off autigrad, set evalation mode
+    // switch off autograd, set evalation mode
     torch::NoGradGuard noGrad;
     module.eval();
 
     // read classes
     std::string line;
-    std::ifstream ifsClasses("class_names.txt", std::ios::in);
+    std::ifstream ifsClasses("../class_names.txt", std::ios::in);
     if (!ifsClasses.is_open()) {
         std::cerr << "Cannot open class_names.txt" << std::endl;
         return -1;
@@ -56,13 +52,13 @@ int main(int argc, const char *argv[]) {
         std::cerr << "Cannot open " << argv[2] << std::endl;
         return -1;
     }
-    size_t size = 3 * 224 * 224 * sizeof(float);
+    size_t size = 3 * 32 * 32 * sizeof(float);
     std::vector<char> data(size);
     ifsData.read(data.data(), data.size());
     ifsData.close();
 
     // create input tensor on CUDA device
-    at::Tensor input = torch::from_blob(data.data(), {1, 3, 224, 224}, torch::kFloat);
+    at::Tensor input = torch::from_blob(data.data(), {1, 3, 32, 32}, torch::kFloat);
     input = input.to(device);
 
     // create inputs
