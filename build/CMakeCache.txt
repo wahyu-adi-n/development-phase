@@ -139,7 +139,7 @@ CMAKE_OBJCOPY:FILEPATH=/usr/bin/objcopy
 CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
 
 //No help, variable specified on the command line.
-CMAKE_PREFIX_PATH:UNINITIALIZED=/path/to/development-phase/libtorch
+CMAKE_PREFIX_PATH:UNINITIALIZED=/path/to/libtorch
 
 //Value Computed by CMake
 CMAKE_PROJECT_DESCRIPTION:STATIC=
